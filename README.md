@@ -1,7 +1,9 @@
 # BrowserHistory Module
----
 
-browserhistory is a simple Python module that extracts browsers's history from a user's local computer. It supports following browsers: Firefox, Google Chrome, and Safari. It supports the OS Platforms: Linux, MacOS, and Windows.
+browserhistory is a simple Python module that extracts browsers's history from a user's local computer and writes the data to csv files.
+
+Platforms: Linux, MacOS, and Windows.
+Suported Browsers: Firefox, Google Chrome, and Safari. 
 
 ## Installation
 ```sh
@@ -24,35 +26,32 @@ $ git clone https://github.com/kcp18/browserhistory
 
 #### Example:
 ```python
->>> import browserhistory
->>> browserhistory_ex = get_browserhistory()
->>> browserhistory_ex.keys()
+Example
+-------
+>>> import browserhistory as bh
+>>> dict_obj = bh.get_browserhistory()
+>>> dict_obj.keys()
 >>> dict_keys(['safari', 'chrome', 'firefox'])
->>> browserhistory_ex['safari'][0]
+>>> dict_obj['safari'][0]
 >>> ('https://mail.google.com', 'Mail', '2018-08-14 08:27:26')
+# Write the data to csv files in the current working directory.
+# safari_browserhistory.csv, chrome_browserhistory.csv, and firefox_browerhistory.csv.
+>>> bh.write_browserhistory_csv()
 ```
 
 ### The Description of browserhistory
----
 
 ```
 NAME
+
     browserhistory
 
 FUNCTIONS
+
     get_browserhistory() -> dict
         Get the user's browsers history by using sqlite3 module to connect to the dabases.
         It returns a dictionary: its key is a name of browser in str and its value is a list of
         tuples, each tuple contains four elements, including url, title, and visited_time. 
-        
-        Example
-        -------
-        >>> import browserhistory
-        >>> browserhistory_ex = get_browserhistory()
-        >>> browserhistory_ex.keys()
-        >>> dict_keys(['safari', 'chrome', 'firefox'])
-        >>> browserhistory_ex['safari'][0]
-        >>> ('https://mail.google.com', 'Mail', '2018-08-14 08:27:26')
     
     get_database_paths() -> dict
         Get paths to the database of browsers and store them in a dictionary.
@@ -66,3 +65,13 @@ FUNCTIONS
         the current working directory. It will writes csv files base on 
         the name of browsers the program detects.
 ```
+
+### Issue Report 
+
+
+If you have any questions or find bugs in the module,  
+please report the issues/questions at the follwing address.
+
+- https://github.com/kcp18/browserhistory/issues
+
+

@@ -113,11 +113,11 @@ def get_browserhistory() -> dict:
 
        Example
        -------
-       >>> import browserhistory
-       >>> browserhistory_ex = get_browserhistory()
-       >>> browserhistory_ex.keys()
+       >>> import browserhistory as bh
+       >>> dict_obj = bh.get_browserhistory()
+       >>> dict_obj.keys()
        >>> dict_keys(['safari', 'chrome', 'firefox'])
-       >>> browserhistory_ex['safari'][0]
+       >>> dict_obj['safari'][0]
        >>> ('https://mail.google.com', 'Mail', '2018-08-14 08:27:26')
     """
     # browserhistory is a dictionary that stores the query results based on the name of browsers.
