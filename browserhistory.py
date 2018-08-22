@@ -121,7 +121,7 @@ def get_browserhistory() -> dict:
        >>> ('https://mail.google.com', 'Mail', '2018-08-14 08:27:26')
     """
     # browserhistory is a dictionary that stores the query results based on the name of browsers.
-    browserhistroy = {}
+    browserhistory = {}
 
     # call get_database_paths() to get database paths.
     paths2databases = get_database_paths()
@@ -158,9 +158,9 @@ def get_browserhistory() -> dict:
         cursor.close()
         conn.close()
         # put the query result based on the name of browsers.
-        browserhistroy[browser] = query_result
+        browserhistory[browser] = query_result
 
-    return browserhistroy
+    return browserhistory
 
 
 def write_browserhistory_csv() -> None:
