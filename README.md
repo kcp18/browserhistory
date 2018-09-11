@@ -74,4 +74,8 @@ please report the issues/questions at the follwing address.
 
 - https://github.com/kcp18/browserhistory/issues
 
+### Reddit Discussion of The Module on Privacy
+
+- https://www.reddit.com/r/Python/comments/98vbur/python_module_that_extracts_the_browsers_history/
+
 
