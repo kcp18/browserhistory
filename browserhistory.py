@@ -149,9 +149,7 @@ def get_browserhistory() -> dict:
             query_result = cursor.fetchall()
         except sqlite3.OperationalError:
             print('* Notification * ')
-            print("Please close Google Chrome completely and invoke the function again,")
-            print("if you like to see the Chrome browser history.")
-            print("Other browsers' history would be stored.")
+            print("Please Completely Close the Brower Windows and Try again")
         except Exception as err:
             print(err)
         # close cursor and connector 

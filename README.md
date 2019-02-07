@@ -1,6 +1,6 @@
 # BrowserHistory Module
 
-browserhistory is a simple Python module that extracts browsers's history from a user's local computer and writes the data to csv files.
+browserhistory is a simple Python module that extracts browser history from a user's local computer and writes the data to csv files.
 
 Platforms: Linux, MacOS, and Windows.
 Suported Browsers: Firefox, Google Chrome, and Safari. 
@@ -27,7 +27,7 @@ $ git clone https://github.com/kcp18/browserhistory
 #### Example:
 ```python
 Example
--------
+=======
 >>> import browserhistory as bh
 >>> dict_obj = bh.get_browserhistory()
 >>> dict_obj.keys()
@@ -37,6 +37,7 @@ Example
 # Write the data to csv files in the current working directory.
 # safari_browserhistory.csv, chrome_browserhistory.csv, and firefox_browerhistory.csv.
 >>> bh.write_browserhistory_csv()
+# Create csv files that contain broswer history
 ```
 
 ### The Description of browserhistory
@@ -49,7 +50,7 @@ NAME
 FUNCTIONS
 
     get_browserhistory() -> dict
-        Get the user's browsers history by using sqlite3 module to connect to the dabases.
+        Get the user's browser history by using sqlite3 module to connect to the dabase.
         It returns a dictionary: its key is a name of browser in str and its value is a list of
         tuples, each tuple contains four elements, including url, title, and visited_time. 
     
