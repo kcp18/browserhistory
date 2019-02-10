@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='browserhistory',
-    version='0.1',
+    version='0.1.2',
     author='Chanwoo Park',
     author_email='parkchan@brandeis.edu',
     description="A simple module to extract browsers's history.",
