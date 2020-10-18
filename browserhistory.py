@@ -8,10 +8,7 @@ from datetime import datetime
 # platform_table maps the name of user's OS to a platform code
 platform_table = {
         'linux': 0,
-        'linux2': 0,
-        'darwin': 1,
-        'cygwin': 2,
-        'win32': 2,
+        'win32': 1,
         }
 
 # it supports Linux, MacOS, and Windows platforms.
@@ -49,30 +46,9 @@ def get_database_paths() -> dict:
     """
     platform_code = user_platformcode
     browser_path_dict = dict()
-    # if it is a macOS
-    if platform_code == 1:
-        cwd_path = os.getcwd()
-        cwd_path_list = cwd_path.split('/')
-        # it creates string paths to broswer databases
-        abs_safari_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Safari', 'History.db')
-        abs_chrome_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Application Support', 'Google/Chrome/Default', 'History')
-        abs_firefox_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Application Support', 'Firefox/Profiles')
-        # check whether the databases exist
-        if os.path.exists(abs_safari_path):
-            browser_path_dict['safari'] = abs_safari_path
-        if os.path.exists(abs_chrome_path):
-            browser_path_dict['chrome'] = abs_chrome_path
-        if os.path.exists(abs_firefox_path):
-            firefox_dir_list = os.listdir(abs_firefox_path)
-            # it looks for a directory that ends '.default'
-            for f in firefox_dir_list:
-                if f.find('.default') > 0:
-                    abs_firefox_path = os.path.join(abs_firefox_path, f, 'places.sqlite')
-            # check whether the firefox database exists
-            if os.path.exists(abs_firefox_path):
-                browser_path_dict['firefox'] = abs_firefox_path
+
     # if it is a windows
-    if platform_code == 2:
+    if platform_code == 1:
         homepath = os.path.expanduser("~")
         abs_chrome_path = os.path.join(homepath, 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'History')
         abs_firefox_path = os.path.join(homepath, 'AppData', 'Roaming', 'Mozilla', 'Firefox', 'Profiles')
@@ -89,19 +65,47 @@ def get_database_paths() -> dict:
     # if it is a linux and it has only a firefox
     if platform_code == 0:
         cwd_path = os.getcwd()
+
         cwd_path_list = cwd_path.split('/')
+
         # it creates string paths to broswer databases
         abs_firefox_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], '.mozilla', 'firefox')
+
         # check whether the path exists
         if os.path.exists(abs_firefox_path):
             firefox_dir_list = os.listdir(abs_firefox_path)
+
             # it looks for a directory that ends '.default'
             for f in firefox_dir_list:
-                if f.find('.default') > 0:
+                if "ah0ylf3g.default-release" == f:
+
                     abs_firefox_path = os.path.join(abs_firefox_path, f, 'places.sqlite')
             # check whether the firefox database exists
             if os.path.exists(abs_firefox_path):
                 browser_path_dict['firefox'] = abs_firefox_path
+    #if the os is liniux and browser is chrome
+    if platform_code == 0:
+        cwd_path = os.getcwd()
+
+        cwd_path_list = cwd_path.split('/')
+
+        # it creates string paths to broswer databases
+        abs_chrome_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], '.config', 'google-chrome')
+
+        # check whether the path exists
+        if os.path.exists(abs_chrome_path):
+            firefox_dir_list = os.listdir(abs_chrome_path)
+
+            # it looks for a directory that ends '.default'
+            for f in firefox_dir_list:
+
+                if "Default" == f:
+
+                    abs_chrome_path = os.path.join(abs_chrome_path, f, 'History')
+
+            # check whether the firefox database exists
+            if os.path.exists(abs_chrome_path):
+                browser_path_dict['chrome'] = abs_chrome_path
 
     return browser_path_dict
 
@@ -162,6 +166,7 @@ def get_browserhistory() -> dict:
             print('* ' + browser.upper() + ' Database Permission Denied.')
 
     return browserhistory
+
 
 
 def write_browserhistory_csv() -> None:
