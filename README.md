@@ -63,7 +63,7 @@ FUNCTIONS
     
     write_browserhistory_csv() -> None
         It writes csv files that contain the browser history in
-        the current working directory. It will writes csv files base on 
+        the current working directory. It will write csv files based on 
         the name of browsers the program detects.
 ```
 
