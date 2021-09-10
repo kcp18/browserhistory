@@ -17,6 +17,7 @@ platform_table = {
 # it supports Linux, MacOS, and Windows platforms.
 try:
     user_platformcode = platform_table[sys.platform]
+    print(sys.platform)
 except KeyError:
     class NotAvailableOS(Exception):
         pass
@@ -74,8 +75,11 @@ def get_database_paths() -> dict:
     # if it is a windows
     if platform_code == 2:
         homepath = os.path.expanduser("~")
+        print(homepath)
         abs_chrome_path = os.path.join(homepath, 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'History')
+        #abs_chrome_path2 = os.path.join(homepath, 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Profile 1','History')
         abs_firefox_path = os.path.join(homepath, 'AppData', 'Roaming', 'Mozilla', 'Firefox', 'Profiles')
+        abs_edge_path = os.path.join(homepath, 'AppData', 'Local', "Microsoft","Edge","User Data","Default",'History')
         # it creates string paths to broswer databases
         if os.path.exists(abs_chrome_path):
             browser_path_dict['chrome'] = abs_chrome_path
@@ -86,6 +90,8 @@ def get_database_paths() -> dict:
                     abs_firefox_path = os.path.join(abs_firefox_path, f, 'places.sqlite')
             if os.path.exists(abs_firefox_path):
                 browser_path_dict['firefox'] = abs_firefox_path
+        if os.path.exists(abs_edge_path):
+            browser_path_dict['edge'] = abs_edge_path
     # if it is a linux and it has only a firefox
     if platform_code == 0:
         cwd_path = os.getcwd()
@@ -128,12 +134,13 @@ def get_browserhistory() -> dict:
 
     for browser, path in paths2databases.items():
         try:
+            print(path)
             conn = sqlite3.connect(path)
             cursor = conn.cursor()
             _SQL = ''
             # SQL command for browsers' database table
             if browser == 'chrome':
-                _SQL = """SELECT url, title, datetime((last_visit_time/1000000)-11644473600, 'unixepoch', 'localtime') 
+                _SQL = """  SELECT url, title, datetime((last_visit_time/1000000)-11644473600, 'unixepoch', 'localtime') 
                                     AS last_visit_time FROM urls ORDER BY last_visit_time DESC"""
             elif browser == 'firefox':
                 _SQL = """SELECT url, title, datetime((visit_date/1000000), 'unixepoch', 'localtime') AS visit_date 
@@ -141,6 +148,9 @@ def get_browserhistory() -> dict:
             elif browser == 'safari':
                 _SQL = """SELECT url, title, datetime(visit_time + 978307200, 'unixepoch', 'localtime') 
                                     FROM history_visits INNER JOIN history_items ON history_items.id = history_visits.history_item ORDER BY visit_time DESC"""
+            elif browser =='edge':
+                _SQL = """  SELECT url, title, datetime((last_visit_time/1000000)-11644473600, 'unixepoch', 'localtime') 
+                                    AS last_visit_time FROM urls ORDER BY last_visit_time DESC"""
             else:
                 pass
             # query_result will store the result of query
