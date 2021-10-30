@@ -3,7 +3,7 @@
 browserhistory is a simple Python module that extracts browser history from a user's local computer and writes the data to csv files.
 
 Platforms: Linux, MacOS, and Windows.
-Suported Browsers: Firefox, Google Chrome, and Safari. 
+Suported Browsers: Firefox, Google Chrome, Brave, and Safari. 
 
 ## Installation
 ```sh
