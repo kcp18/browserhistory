@@ -57,11 +57,14 @@ def get_database_paths() -> dict:
         abs_safari_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Safari', 'History.db')
         abs_chrome_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Application Support', 'Google/Chrome/Default', 'History')
         abs_firefox_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Application Support', 'Firefox/Profiles')
+        abs_brave_path = os.path.join('/', cwd_path_list[1], cwd_path_list[2], 'Library', 'Application Support', 'BraveSoftware/Brave-Browser/Default', 'History')
         # check whether the databases exist
         if os.path.exists(abs_safari_path):
             browser_path_dict['safari'] = abs_safari_path
         if os.path.exists(abs_chrome_path):
             browser_path_dict['chrome'] = abs_chrome_path
+        if os.path.exists(abs_brave_path):
+            browser_path_dict['brave'] = abs_brave_path
         if os.path.exists(abs_firefox_path):
             firefox_dir_list = os.listdir(abs_firefox_path)
             # it looks for a directory that ends '.default'
@@ -76,9 +79,12 @@ def get_database_paths() -> dict:
         homepath = os.path.expanduser("~")
         abs_chrome_path = os.path.join(homepath, 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'History')
         abs_firefox_path = os.path.join(homepath, 'AppData', 'Roaming', 'Mozilla', 'Firefox', 'Profiles')
+        abs_brave_path = os.path.join(homepath, 'AppData', 'Local', 'BraveSoftware', 'Brave-Browser', 'User Data', 'Default', 'History')
         # it creates string paths to broswer databases
         if os.path.exists(abs_chrome_path):
             browser_path_dict['chrome'] = abs_chrome_path
+        if os.path.exists(abs_brave_path):
+            browser_path_dict['brave'] = abs_brave_path
         if os.path.exists(abs_firefox_path):
             firefox_dir_list = os.listdir(abs_firefox_path)
             for f in firefox_dir_list:
@@ -133,6 +139,9 @@ def get_browserhistory() -> dict:
             _SQL = ''
             # SQL command for browsers' database table
             if browser == 'chrome':
+                _SQL = """SELECT url, title, datetime((last_visit_time/1000000)-11644473600, 'unixepoch', 'localtime') 
+                                    AS last_visit_time FROM urls ORDER BY last_visit_time DESC"""
+            if browser == 'brave':
                 _SQL = """SELECT url, title, datetime((last_visit_time/1000000)-11644473600, 'unixepoch', 'localtime') 
                                     AS last_visit_time FROM urls ORDER BY last_visit_time DESC"""
             elif browser == 'firefox':
